@@ -60,7 +60,7 @@ function callback(err, request, body){
     console.log(err)
 }
    
-   else{ 
+   { 
        courseBody = JSON.parse(body);
        length = courseBody.courses.length;
     }
