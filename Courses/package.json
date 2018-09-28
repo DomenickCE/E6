@@ -1,0 +1,27 @@
+{
+  "name": "courses",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DomenickCE/E6GolfSite.git"
+  },
+  "author": "Domenick Evangelista",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DomenickCE/E6GolfSite/issues"
+  },
+  "homepage": "https://github.com/DomenickCE/E6GolfSite#readme",
+  "dependencies": {
+    "body": "^5.1.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.17",
+    "parser": "^0.1.4",
+    "request": "^2.88.0"
+  }
+}
