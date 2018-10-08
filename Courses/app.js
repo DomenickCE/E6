@@ -39,6 +39,8 @@ var courseSchema = new mongoose.Schema({
 
 })
 
+var course= mongoose.model("course", courseSchema);
+
 ///options is the parameters that a postal service uses to mail something to an address.
 
 var options = {
