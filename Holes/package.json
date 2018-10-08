@@ -1,0 +1,25 @@
+{
+  "name": "holes",
+  "version": "1.0.0",
+  "description": "Hole data from E6",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DomenickCE/E6.git"
+  },
+  "author": "Domenick Evangelista",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DomenickCE/E6/issues"
+  },
+  "homepage": "https://github.com/DomenickCE/E6#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.3.2",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
+  }
+}
