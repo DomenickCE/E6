@@ -51,14 +51,14 @@ function callback(err, request, body){
 
     var courseBody = body
  
-    var length = courseBody.courses.length
+    var Courselength = courseBody.courses.length
 
-    console.log(length)
+    console.log(Courselength)
     
     
 
           // it is not good to hit the server with a lot of requests which will overload it. (looping the request 90+ times)
-    for(var i = 0; i < length; i++){
+    for(var i = 0; i < Courselength; i++){
         var options2 = {
             method:'GET',
             uri: "https://app-api.e6golf.com/courses/" + courseBody.courses[i].id  ,
