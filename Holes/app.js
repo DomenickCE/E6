@@ -6,15 +6,13 @@ const mongoose = require("mongoose");
 const app = express();
 
 mongoose.connect("mongodb://localhost/E6_Courses",{ useNewUrlParser: true });
-
 mongoose.connection.once("open", function(){
     console.log("connection has been made!")
 }).on("error", function(error){
     console.log(error);
 });
 
-var holeSchema = new mongoose.Schema({
-            
+var holeSchema = new mongoose.Schema({     
     black: Number,
     blue: Number,
     courseID: Number,
@@ -25,7 +23,6 @@ var holeSchema = new mongoose.Schema({
     par: Number,
     red: Number,
     white: Number,
-
 });
 
 var holes = mongoose.model('holes', holeSchema);
@@ -39,24 +36,16 @@ var options = {
     json:true
 }
 
-
-
 function callback(err, request, body){
     if(err){       
      console.log(err)
  } 
  else{  
-   
     const request = require("request")
-
     var courseBody = body
- 
     var Courselength = courseBody.courses.length
-
     console.log(Courselength)
     
-    
-
           // it is not good to hit the server with a lot of requests which will overload it. (looping the request 90+ times)
     for(var i = 0; i < Courselength; i++){
         var options2 = {
@@ -68,17 +57,14 @@ function callback(err, request, body){
             json:true
         }
         function callback2(err, request, body){
-            if(err){
+            if (err) {
                 console.log(err);
             }
-            else{
-               
+            else {
                 var Options2Data = body;
-
                 console.log(Options2Data.holes.length)
-
-               var HolesLength = Options2Data.holes.length
-
+                var HolesLength = Options2Data.holes.length
+                
                 for(var i = 0; i < HolesLength; i++){
                 holes.insertMany([
                     {
@@ -94,23 +80,16 @@ function callback(err, request, body){
                     white: Options2Data.holes[i].white,
                     }
                  ], function(err){
-                     if(err)console.log("error saving to database:" + err)
-
-                     else{console.log("Saving to Database")}
+                     if (err) console.log("error saving to database:" + err)
+                     else {
+                         console.log("Saving to Database")
+                     }
                  });
-
-                    }
-                           
+                    }       
                 };
-                    
             };
-            
-
             request(options2,callback2);
-
-            
      }
-    
  }
 
 
