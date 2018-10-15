@@ -76,34 +76,34 @@ function callback(err, request, body){
                 var parHoles = [];
 
                 for(var i = 0; i <= 17; i++){
-                  console.log(courseBody.courses[i].id)
+
                   parHoles.push(Options2Data.holes[i].par);
                 }
 
      course.insertMany(
          [{
-             address: courseBody.courses[i].address,
-             black: courseBody.courses[i].black,
-             blue: courseBody.courses[i].blue,
-             city: courseBody.courses[i].city,
-             country: courseBody.courses[i].country,
-             elevation: courseBody.courses[i].elevation,
-             gold: courseBody.courses[i].gold,
-             id: courseBody.courses[i].id,
-             imageURL: courseBody.courses[i].imageURL,
-             legacyID: courseBody.courses[i].legacyID,
-            name: courseBody.courses[i].name,
-             par: courseBody.courses[i].par,
+             address: Options2Data.courses[0].address,
+             black: Options2Data.courses[0].black,
+             blue: Options2Data.courses[0].blue,
+             city: Options2Data.courses[0].city,
+             country: Options2Data.courses[0].country,
+             elevation: Options2Data.courses[0].elevation,
+             gold: Options2Data.courses[0].gold,
+             id: Options2Data.courses[0].id,
+             imageURL: Options2Data.courses[0].imageURL,
+             legacyID: Options2Data.courses[0].legacyID,
+            name: Options2Data.courses[0].name,
+             par: Options2Data.courses[0].par,
              holesPar: parHoles,
-             phone: courseBody.courses[i].phone,
-            postalCode: courseBody.courses[i].postalCode,
-             rating: courseBody.courses[i].rating,
-             red: courseBody.courses[i].red,
-             slope: courseBody.courses[i].slope,
-             stateProvidence: courseBody.courses[i].stateProvidence,
-             thumb: courseBody.courses[i].thumb,
-             white: courseBody.courses[i].white,
-             womensPar: courseBody.courses[i].womensPar
+             phone: Options2Data.courses[0].phone,
+            postalCode: Options2Data.courses[0].postalCode,
+             rating: Options2Data.courses[0].rating,
+             red: Options2Data.courses[0].red,
+             slope: Options2Data.courses[0].slope,
+             stateProvidence: Options2Data.courses[0].stateProvidence,
+             thumb: Options2Data.courses[0].thumb,
+             white: Options2Data.courses[0].white,
+             womensPar: Options2Data.courses[0].womensPar
          }],
          function(err){
          if(err){
