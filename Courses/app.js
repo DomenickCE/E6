@@ -1,6 +1,5 @@
 const request = require("request-promise");
 const express = require("express");
-const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 
 const app = express();
@@ -59,12 +58,12 @@ var length = null;
 
 // callback is stating what happens when the request is received. CALLBACK IS USING THE MAIL AFTER REQUEST AND OPTIONS SEND IT.
 function callback(err, request, body){
-   if(err){ 
-       
+   if(err){
+
     console.log(err)
 }
-   
-else{ 
+
+else{
       var courseBody = body
 
          var length = courseBody.courses.length
@@ -77,9 +76,9 @@ else{
  for(var i = 0; i < length; i++){
 
  course.insertMany(
-    
+
      [
-        
+
      {
          address: coursesBody.courses[i].address,
          black: coursesBody.courses[i].black,
@@ -110,7 +109,7 @@ else{
          console.log("error saving to database: " + err)
      }
      else{
-         console.log("Saving was a success")       
+         console.log("Saving was a success")
      }
 
  })

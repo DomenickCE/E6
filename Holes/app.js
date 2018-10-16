@@ -91,17 +91,8 @@ function callback(err, request, body){
             request(options2,callback2);
      }
  }
-
-
-
-
-
-
-     
+    
     };// loop
-       
-    
-
-    
+          
     //req, res
     request(options,callback);
