@@ -110,17 +110,17 @@ else{
                 console.log(err)
               }
               else{
-                
+
                   var UserScores = [];
                   var  userBody = body
 
-                  
+
                   for(var i = 0; i < 18; i++){
                     UserScores.push(userBody.players[0].scores[0].par[i])
                   }
-                  
-                  userScoresDB.create({ 
-                    
+
+                  userScoresDB.create({
+
                     UserID:userBody.users[0].id,
                     parScore:UserScores
 
@@ -128,17 +128,11 @@ else{
                     if (err) return handleError(err);
                     // saved!
                   });
-                  
-
-
-
           }
             }
             request(options3,callback3)
-        })//foreach
-        
+        })//foreach      
       }
-  
 }
 request(options2,callback2)
 }
