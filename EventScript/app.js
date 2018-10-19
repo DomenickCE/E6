@@ -39,7 +39,10 @@ var courseSchema = new mongoose.Schema({
 
 var UserScoresDB = new mongoose.Schema({
   UserID: Number,
-  parScore: String
+  parScore: String,
+  Name: String,
+  Email: String,
+  UserName: String,
 })
 
 var userScoresDB = mongoose.model("UserScores", UserScoresDB);
@@ -86,14 +89,16 @@ else{
           var request = require("request");
 
           var UserIDs = []
+          var UserNames = []
 
           var LdrBoardData = body;
 
             for(var i = 0; i < LdrBoardData.users.length; i++){
           UserIDs.push(LdrBoardData.users[i].id)
+          UserNames.push(LdrBoardData.users[i].username)
             }
 
-            console.log(UserIDs)
+            console.log(UserNames)
 
         UserIDs.forEach(function(Ids){
             var options3 = {
@@ -111,6 +116,8 @@ else{
               }
               else{
 
+                var request = require("request");
+
                   var UserScores = [];
                   var  userBody = body
 
@@ -119,16 +126,45 @@ else{
                     UserScores.push(userBody.players[0].scores[0].par[i])
                   }
 
-                  userScoresDB.create({
+                  
 
-                    UserID:userBody.users[0].id,
-                    parScore:UserScores
+                  for(var i = 0; i <= LdrBoardData.users.length; i++){
+                  var options4 = {
+                    method:'GET',
+                    uri: "https://app-api.e6golf.com/users/" + userBody.users[i].username + "/profile",
+                    headers: {
+                        'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhcHAuZTZnb2xmLmNvbSIsImV4cCI6MTU2NTkzNjI4MCwiaWF0IjoxNTM3MTM2MjgwLCJpc3MiOiJUcnVHb2xmIEFQSSIsImp0aSI6IjBmZmFmOTE4LWE3ZjUtNGI1YS1hY2YxLTVjMTI2YjExYTg0OSIsInNjb3BlcyI6WyJhcGk6YWNjZXNzIiwiYXBpOnBsYXllcjphY2Nlc3MiXSwic3ViIjoxMDQ2OTIsInN1YlR5cGUiOiJtb2RlbHMudXNlciIsInVzZXJJRCI6MTA0NjkyfQ.ltTXF_vfZYo97BxYi-aUiAJMemr71wVhDuhb85weYWU"
+                    },
+                    json:true
+                  }
+                  function callback4(err,request,body){
+                    if(err){
+                      console.log(err)
+                    }
+                    else{
 
-                   }, function (err, small) {
-                    if (err) return handleError(err);
-                    // saved!
-                  });
-          }
+                     var profileBody = body;
+
+                      userScoresDB.create({
+                        FirstName: profileBody.users[0].firstName,
+                        LastName: profileBody.users[0].lastName,
+                        Email: profileBody.users[0].email,
+                        UserName: userBody.users[0].username,
+                        UserID:userBody.users[0].id,
+                        parScore:UserScores
+    
+                       }, function (err, small) {
+                        if (err) return handleError(err);
+                        // saved!
+                      });
+
+                    } 
+                  }
+
+
+                  request(options4,callback4)
+                  }
+              }
             }
             request(options3,callback3)
         })//foreach      
