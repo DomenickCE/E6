@@ -129,7 +129,7 @@ else{
                   for(var i = 0; i < 18; i++){
                     
                     userScores.push(userBody.players[0].scores[0].par[i])
-                      console.log(userBody.players[0].scores[0].par[i])
+            
                   }
 
                   
