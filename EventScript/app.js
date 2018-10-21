@@ -38,6 +38,8 @@ var courseSchema = new mongoose.Schema({
 })
 
 var UserScoresDB = new mongoose.Schema({
+  FirstName:String,
+  LastName:String,
   UserID: Number,
   parScore: String,
   Name: String,
@@ -88,6 +90,8 @@ else{
         else{
           var request = require("request");
 
+          var userScores = [];
+
           var UserIDs = []
           var UserNames = []
 
@@ -98,7 +102,7 @@ else{
           UserNames.push(LdrBoardData.users[i].username)
             }
 
-            console.log(UserNames)
+            // console.log(UserNames)
 
         UserIDs.forEach(function(Ids){
             var options3 = {
@@ -118,20 +122,28 @@ else{
 
                 var request = require("request");
 
-                  var UserScores = [];
+                 
                   var  userBody = body
 
 
                   for(var i = 0; i < 18; i++){
-                    UserScores.push(userBody.players[0].scores[0].par[i])
+                    
+                    userScores.push(userBody.players[0].scores[0].par[i])
+                      console.log(userBody.players[0].scores[0].par[i])
                   }
 
                   
 
+                  // console.log(userBody.users[0].username)
+                }
+              }
+              request(options3,callback3)
+          })//foreach 
+
                   for(var i = 0; i <= LdrBoardData.users.length; i++){
                   var options4 = {
                     method:'GET',
-                    uri: "https://app-api.e6golf.com/users/" + userBody.users[i].username + "/profile",
+                    uri: "https://app-api.e6golf.com/users/" + UserNames[0] + "/profile",
                     headers: {
                         'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhcHAuZTZnb2xmLmNvbSIsImV4cCI6MTU2NTkzNjI4MCwiaWF0IjoxNTM3MTM2MjgwLCJpc3MiOiJUcnVHb2xmIEFQSSIsImp0aSI6IjBmZmFmOTE4LWE3ZjUtNGI1YS1hY2YxLTVjMTI2YjExYTg0OSIsInNjb3BlcyI6WyJhcGk6YWNjZXNzIiwiYXBpOnBsYXllcjphY2Nlc3MiXSwic3ViIjoxMDQ2OTIsInN1YlR5cGUiOiJtb2RlbHMudXNlciIsInVzZXJJRCI6MTA0NjkyfQ.ltTXF_vfZYo97BxYi-aUiAJMemr71wVhDuhb85weYWU"
                     },
@@ -144,14 +156,15 @@ else{
                     else{
 
                      var profileBody = body;
-
+                       
                       userScoresDB.create({
+
                         FirstName: profileBody.users[0].firstName,
                         LastName: profileBody.users[0].lastName,
                         Email: profileBody.users[0].email,
-                        UserName: userBody.users[0].username,
-                        UserID:userBody.users[0].id,
-                        parScore:UserScores
+                        UserName: profileBody.users[0].username,
+                        UserID: profileBody.users[0].id,
+                        parScore: userScores
     
                        }, function (err, small) {
                         if (err) return handleError(err);
@@ -164,10 +177,7 @@ else{
 
                   request(options4,callback4)
                   }
-              }
-            }
-            request(options3,callback3)
-        })//foreach      
+                   
       }
 }
 request(options2,callback2)
