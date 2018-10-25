@@ -90,60 +90,54 @@ else{
         else{
           var request = require("request");
 
-          var userScores = [];
 
           var UserIDs = []
-          var UserNames = []
+          
 
           var LdrBoardData = body;
 
-            for(var i = 0; i < LdrBoardData.users.length; i++){
-          UserIDs.push(LdrBoardData.users[i].id)
-          UserNames.push(LdrBoardData.users[i].username)
+            for(var n = 0; n < LdrBoardData.users.length; n++){
+          UserIDs.push(LdrBoardData.users[n].id)
+            console.log(LdrBoardData.users[n].id)         
             }
 
             // console.log(UserNames)
-
-        UserIDs.forEach(function(Ids){
+           
+        for(var i = 0; i < 20; i++){
             var options3 = {
                 method:'GET',
-                uri: "https://app-api.e6golf.com/events/"+ eventNumber + "/users/" + Ids,
+                uri: "https://app-api.e6golf.com/events/"+ eventNumber + "/users/" + UserIDs[i],
                 headers: {
                     'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhcHAuZTZnb2xmLmNvbSIsImV4cCI6MTU2NTkzNjI4MCwiaWF0IjoxNTM3MTM2MjgwLCJpc3MiOiJUcnVHb2xmIEFQSSIsImp0aSI6IjBmZmFmOTE4LWE3ZjUtNGI1YS1hY2YxLTVjMTI2YjExYTg0OSIsInNjb3BlcyI6WyJhcGk6YWNjZXNzIiwiYXBpOnBsYXllcjphY2Nlc3MiXSwic3ViIjoxMDQ2OTIsInN1YlR5cGUiOiJtb2RlbHMudXNlciIsInVzZXJJRCI6MTA0NjkyfQ.ltTXF_vfZYo97BxYi-aUiAJMemr71wVhDuhb85weYWU"
                 },
                 json:true
               }
-
-            function callback3(err,request,body){
+              
+            function callback3(err,request,body,i){
               if(err){
                 console.log(err)
               }
               else{
-
+              
                 var request = require("request");
-
+                
+                   var userScores = [];
+                console.log(LdrBoardData.users[0].id)
                  
                   var  userBody = body
 
 
-                  for(var i = 0; i < 18; i++){
+                  for(var j = 0; j < 18; j++){
                     
-                    userScores.push(userBody.players[0].scores[0].par[i])
+                    userScores.push(userBody.players[0].scores[0].par[j])
+                    
             
                   }
-
                   
 
-                  // console.log(userBody.users[0].username)
-                }
-              }
-              request(options3,callback3)
-          })//foreach 
-
-                  for(var i = 0; i <= LdrBoardData.users.length; i++){
                   var options4 = {
                     method:'GET',
-                    uri: "https://app-api.e6golf.com/users/" + UserNames[0] + "/profile",
+                    uri: "https://app-api.e6golf.com/users/" + LdrBoardData.users[0].username + "/profile",
                     headers: {
                         'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhcHAuZTZnb2xmLmNvbSIsImV4cCI6MTU2NTkzNjI4MCwiaWF0IjoxNTM3MTM2MjgwLCJpc3MiOiJUcnVHb2xmIEFQSSIsImp0aSI6IjBmZmFmOTE4LWE3ZjUtNGI1YS1hY2YxLTVjMTI2YjExYTg0OSIsInNjb3BlcyI6WyJhcGk6YWNjZXNzIiwiYXBpOnBsYXllcjphY2Nlc3MiXSwic3ViIjoxMDQ2OTIsInN1YlR5cGUiOiJtb2RlbHMudXNlciIsInVzZXJJRCI6MTA0NjkyfQ.ltTXF_vfZYo97BxYi-aUiAJMemr71wVhDuhb85weYWU"
                     },
@@ -154,30 +148,42 @@ else{
                       console.log(err)
                     }
                     else{
-
+                      
                      var profileBody = body;
                        
-                      userScoresDB.create({
+                      // userScoresDB.create({
 
-                        FirstName: profileBody.users[0].firstName,
-                        LastName: profileBody.users[0].lastName,
-                        Email: profileBody.users[0].email,
-                        UserName: profileBody.users[0].username,
-                        UserID: profileBody.users[0].id,
-                        parScore: userScores
+                      //   FirstName: profileBody.users[0].firstName,
+                      //   LastName: profileBody.users[0].lastName,
+                      //   Email: profileBody.users[0].email,
+                      //   UserName: profileBody.users[0].username,
+                      //   UserID: LdrBoardData.users[0].id,
+                      //   parScore: userScores
+
+                      // console.log(profileBody.users[0].firstName)
+                      // console.log(profileBody.users[0].lastName)
+                      // console.log( profileBody.users[0].email)
+                      // console.log( profileBody.users[0].username)
+                      // console.log(LdrBoardData.users[i].id)
+                      // console.log(userScores)
     
-                       }, function (err, small) {
-                        if (err) return handleError(err);
-                        // saved!
-                      });
+                      //  }, function (err, small) {
+                      //   if (err) return handleError(err);
+                      //   // saved!
+                      // });
 
                     } 
                   }
 
-
-                  request(options4,callback4)
-                  }
-                   
+                }
+                request(options4,callback4)
+              }
+              // function callbackWrapper(err,body,request){
+              //    return callback3(err,request,body,i)
+              //  }
+              request(options3,callback3)
+              
+          }//for         
       }
 }
 request(options2,callback2)
