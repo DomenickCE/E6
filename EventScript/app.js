@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-mongoose.connect("mongodb://localhost/E6_Courses",{ useNewUrlParser: true });
+mongoose.connect("mongodb://Domenick:Ilikebrunettes44@ds119578.mlab.com:19578/e6_clubhouse",{ useNewUrlParser: true });
+
+// mongoose.connect("mongodb://localhost/E6_Courses",{ useNewUrlParser: true });
 
 mongoose.connection.once("open", function(){
     console.log("connection has been made!")
@@ -42,6 +44,7 @@ var UserScoresDB = new mongoose.Schema({
   LastName:String,
   UserID: Number,
   parScore: String,
+  Handicap: Number,
   Name: String,
   Email: String,
   UserName: String,
@@ -97,13 +100,12 @@ else{
           var LdrBoardData = body;
 
             for(var n = 0; n < LdrBoardData.users.length; n++){
-          UserIDs.push(LdrBoardData.users[n].id)
-            console.log(LdrBoardData.users[n].id)         
+          UserIDs.push(LdrBoardData.users[n].id)     
             }
 
             // console.log(UserNames)
            
-        for(var i = 0; i < 20; i++){
+        for(var i = 0; i < UserIDs.length; i++){
             var options3 = {
                 method:'GET',
                 uri: "https://app-api.e6golf.com/events/"+ eventNumber + "/users/" + UserIDs[i],
@@ -113,7 +115,7 @@ else{
                 json:true
               }
               
-            function callback3(err,request,body,i){
+            function callback3(err,request,body){
               if(err){
                 console.log(err)
               }
@@ -122,7 +124,12 @@ else{
                 var request = require("request");
                 
                    var userScores = [];
-                console.log(LdrBoardData.users[0].id)
+               
+
+                // console.log(LdrBoardData.users[this.i].id)
+                 
+                // console.log(LdrBoardData.users[i].id) 
+                
                  
                   var  userBody = body
 
@@ -137,7 +144,7 @@ else{
 
                   var options4 = {
                     method:'GET',
-                    uri: "https://app-api.e6golf.com/users/" + LdrBoardData.users[0].username + "/profile",
+                    uri: "https://app-api.e6golf.com/users/" + LdrBoardData.users[this.i].username + "/profile",
                     headers: {
                         'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhcHAuZTZnb2xmLmNvbSIsImV4cCI6MTU2NTkzNjI4MCwiaWF0IjoxNTM3MTM2MjgwLCJpc3MiOiJUcnVHb2xmIEFQSSIsImp0aSI6IjBmZmFmOTE4LWE3ZjUtNGI1YS1hY2YxLTVjMTI2YjExYTg0OSIsInNjb3BlcyI6WyJhcGk6YWNjZXNzIiwiYXBpOnBsYXllcjphY2Nlc3MiXSwic3ViIjoxMDQ2OTIsInN1YlR5cGUiOiJtb2RlbHMudXNlciIsInVzZXJJRCI6MTA0NjkyfQ.ltTXF_vfZYo97BxYi-aUiAJMemr71wVhDuhb85weYWU"
                     },
@@ -151,37 +158,28 @@ else{
                       
                      var profileBody = body;
                        
-                      // userScoresDB.create({
+                      userScoresDB.create({
 
-                      //   FirstName: profileBody.users[0].firstName,
-                      //   LastName: profileBody.users[0].lastName,
-                      //   Email: profileBody.users[0].email,
-                      //   UserName: profileBody.users[0].username,
-                      //   UserID: LdrBoardData.users[0].id,
-                      //   parScore: userScores
+                        FirstName: profileBody.users[0].firstName,
+                        LastName: profileBody.users[0].lastName,
+                        Email: profileBody.users[0].email,
+                        UserName: profileBody.users[0].username,
+                        UserID: LdrBoardData.users[0].id,
+                        Handicap: profileBody.users[0].handicap,
+                        parScore: userScores
 
-                      // console.log(profileBody.users[0].firstName)
-                      // console.log(profileBody.users[0].lastName)
-                      // console.log( profileBody.users[0].email)
-                      // console.log( profileBody.users[0].username)
-                      // console.log(LdrBoardData.users[i].id)
-                      // console.log(userScores)
-    
-                      //  }, function (err, small) {
-                      //   if (err) return handleError(err);
-                      //   // saved!
-                      // });
+                       }, function (err, small) {
+                        if (err) return handleError(err);
+                        // saved!
+                      });
 
                     } 
                   }
 
                 }
-                request(options4,callback4)
+                request(options4,callback4.bind({i:i}));
               }
-              // function callbackWrapper(err,body,request){
-              //    return callback3(err,request,body,i)
-              //  }
-              request(options3,callback3)
+              request(options3,callback3.bind({i:i}))
               
           }//for         
       }
